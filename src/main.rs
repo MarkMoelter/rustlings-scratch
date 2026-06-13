@@ -1,3 +1,8 @@
 fn main() {
-    println!("Hello, Mark! Today is 2026-06-12");
+    let name: &str = "Mark";
+    let age: u32 = 123;
+    let height_meters: f32 = 3.5;
+    let is_devops: bool = true;
+
+    println!("{name}, {age}, {height_meters}, {is_devops}");
 }
