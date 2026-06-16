@@ -8,7 +8,7 @@ fn main() {
     // println!("{name}, {age}, {height_meters}, {is_devops}");
 
     // Day 3 - FizzBuzz
-    let iter = 20;
+    // let iter = 20;
 
     // for i in 1..=iter {
     //     let mut output = i.to_string();
@@ -26,12 +26,36 @@ fn main() {
     //     println!("{output}")
     // }
 
-    for i in 1..=iter {
-        match (i % 3, i % 5) {
-            (0, 0) => println!("FizzBuzz"),
-            (0, _) => println!("Fizz"),
-            (_, 0) => println!("Buzz"),
-            _ => println!("{i}"),
+    // for i in 1..=iter {
+    //     match (i % 3, i % 5) {
+    //         (0, 0) => println!("FizzBuzz"),
+    //         (0, _) => println!("Fizz"),
+    //         (_, 0) => println!("Buzz"),
+    //         _ => println!("{i}"),
+    //     }
+    // }
+
+    // Day 4
+    for i in 2..=20 {
+        if is_prime(i) {
+            println!("{i}");
         }
     }
+}
+
+// Day 4
+fn is_prime(num: i32) -> bool {
+    if num < 2 {
+        return false;
+    }
+
+    for i in 2..num {
+        if i * i > num {
+            break;
+        }
+        if num % i == 0 {
+            return false;
+        }
+    }
+    true
 }
