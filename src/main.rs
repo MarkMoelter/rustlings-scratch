@@ -1,3 +1,9 @@
+struct Server {
+    name: String,
+    cpu_cores: u32,
+    is_active: bool,
+}
+
 fn main() {
     // Day 2 - Variables, Mutability, and Types
     // let name: &str = "Mark";
@@ -50,9 +56,43 @@ fn main() {
     // println!("sum={sum}, avg={avg}, evens={evens:?}");
 
     // Day 6
-    let s1 = "testing testing";
-    let s2 = "testing";
-    println!("{}", longest(&s1, &s2))
+    // let s1 = "testing testing";
+    // let s2 = "testing";
+    // println!("{}", longest(&s1, &s2))
+
+    // Day 7
+    // My way
+    let servers: Vec<Server> = vec![
+        Server {
+            name: "web-01".into(),
+            cpu_cores: 4,
+            is_active: true,
+        },
+        Server {
+            name: "web-02".into(),
+            cpu_cores: 4,
+            is_active: false,
+        },
+        Server {
+            name: "backend-01".into(),
+            cpu_cores: 16,
+            is_active: true,
+        },
+    ];
+
+    let mut num_active = 0;
+    for s in &servers {
+        println!("{} has {} cores", s.name, s.cpu_cores);
+
+        if s.is_active {
+            num_active += 1;
+        }
+    }
+    println!("{} servers active", num_active);
+
+    // More rustic way
+    let active = servers.iter().filter(|s| s.is_active).count();
+    println!("active: {active}");
 }
 
 // Day 4
