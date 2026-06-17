@@ -1,7 +1,25 @@
+use core::fmt;
+
 struct Server {
     name: String,
     cpu_cores: u32,
     is_active: bool,
+}
+
+enum TrafficLight {
+    Red,
+    Yellow,
+    Green,
+}
+
+impl fmt::Display for TrafficLight {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            TrafficLight::Green => write!(f, "GO"),
+            TrafficLight::Yellow => write!(f, "SLOW"),
+            TrafficLight::Red => write!(f, "STOP"),
+        }
+    }
 }
 
 fn main() {
@@ -62,37 +80,45 @@ fn main() {
 
     // Day 7
     // My way
-    let servers: Vec<Server> = vec![
-        Server {
-            name: "web-01".into(),
-            cpu_cores: 4,
-            is_active: true,
-        },
-        Server {
-            name: "web-02".into(),
-            cpu_cores: 4,
-            is_active: false,
-        },
-        Server {
-            name: "backend-01".into(),
-            cpu_cores: 16,
-            is_active: true,
-        },
-    ];
+    // let servers: Vec<Server> = vec![
+    //     Server {
+    //         name: "web-01".into(),
+    //         cpu_cores: 4,
+    //         is_active: true,
+    //     },
+    //     Server {
+    //         name: "web-02".into(),
+    //         cpu_cores: 4,
+    //         is_active: false,
+    //     },
+    //     Server {
+    //         name: "backend-01".into(),
+    //         cpu_cores: 16,
+    //         is_active: true,
+    //     },
+    // ];
 
-    let mut num_active = 0;
-    for s in &servers {
-        println!("{} has {} cores", s.name, s.cpu_cores);
+    // let mut num_active = 0;
+    // for s in &servers {
+    //     println!("{} has {} cores", s.name, s.cpu_cores);
 
-        if s.is_active {
-            num_active += 1;
-        }
+    //     if s.is_active {
+    //         num_active += 1;
+    //     }
+    // }
+    // println!("{} servers active", num_active);
+
+    // // More rustic way
+    // let active = servers.iter().filter(|s| s.is_active).count();
+    // println!("active: {active}");
+
+    // Day 8
+    let lights: Vec<TrafficLight> =
+        vec![TrafficLight::Red, TrafficLight::Yellow, TrafficLight::Green];
+    for i in lights {
+        let next = next_traffic_light(&i);
+        println!("Current: {}; Next: {}", i, next)
     }
-    println!("{} servers active", num_active);
-
-    // More rustic way
-    let active = servers.iter().filter(|s| s.is_active).count();
-    println!("active: {active}");
 }
 
 // Day 4
@@ -117,5 +143,13 @@ fn longest(s1: &str, s2: &str) -> usize {
         s1.len()
     } else {
         s2.len()
+    }
+}
+
+fn next_traffic_light(light: &TrafficLight) -> TrafficLight {
+    match light {
+        TrafficLight::Green => TrafficLight::Yellow,
+        TrafficLight::Yellow => TrafficLight::Red,
+        TrafficLight::Red => TrafficLight::Green,
     }
 }
