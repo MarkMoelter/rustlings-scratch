@@ -36,11 +36,18 @@ fn main() {
     // }
 
     // Day 4
-    for i in 2..=20 {
-        if is_prime(i) {
-            println!("{i}");
-        }
-    }
+    // for i in 2..=20 {
+    //     if is_prime(i) {
+    //         println!("{i}");
+    //     }
+    // }
+
+    // Day 5
+    let v: Vec<i32> = (1..=10).collect();
+    let sum: i32 = v.iter().sum();
+    let avg: f64 = sum as f64 / v.len() as f64;
+    let evens: Vec<&i32> = v.iter().filter(|x| *x % 2 == 0).collect();
+    println!("sum={sum}, avg={avg}, evens={evens:?}");
 }
 
 // Day 4
