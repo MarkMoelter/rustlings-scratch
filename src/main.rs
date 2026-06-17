@@ -43,11 +43,16 @@ fn main() {
     // }
 
     // Day 5
-    let v: Vec<i32> = (1..=10).collect();
-    let sum: i32 = v.iter().sum();
-    let avg: f64 = sum as f64 / v.len() as f64;
-    let evens: Vec<&i32> = v.iter().filter(|x| *x % 2 == 0).collect();
-    println!("sum={sum}, avg={avg}, evens={evens:?}");
+    // let v: Vec<i32> = (1..=10).collect();
+    // let sum: i32 = v.iter().sum();
+    // let avg: f64 = sum as f64 / v.len() as f64;
+    // let evens: Vec<&i32> = v.iter().filter(|x| *x % 2 == 0).collect();
+    // println!("sum={sum}, avg={avg}, evens={evens:?}");
+
+    // Day 6
+    let s1 = "testing testing";
+    let s2 = "testing";
+    println!("{}", longest(&s1, &s2))
 }
 
 // Day 4
@@ -65,4 +70,12 @@ fn is_prime(num: i32) -> bool {
         }
     }
     true
+}
+
+fn longest(s1: &str, s2: &str) -> usize {
+    if s1.len() > s2.len() {
+        return s1.len();
+    } else {
+        return s2.len();
+    }
 }
