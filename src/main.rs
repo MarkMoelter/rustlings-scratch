@@ -74,8 +74,8 @@ fn is_prime(num: i32) -> bool {
 
 fn longest(s1: &str, s2: &str) -> usize {
     if s1.len() > s2.len() {
-        return s1.len();
+        s1.len()
     } else {
-        return s2.len();
+        s2.len()
     }
 }
