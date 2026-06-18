@@ -1,4 +1,5 @@
 use core::fmt;
+use std::collections::HashMap;
 
 struct Server {
     name: String,
@@ -147,25 +148,41 @@ fn main() {
     // }
 
     // Day 9 - impl Blocks
-    let mut s = Rectangle::square(4.0);
-    s.scale(2.0);
-    println!(
-        "area = {}, perimeter = {}, is a square = {}",
-        s.area(),
-        s.perimeter(),
-        s.is_square()
-    );
+    // let mut s = Rectangle::square(4.0);
+    // s.scale(2.0);
+    // println!(
+    //     "area = {}, perimeter = {}, is a square = {}",
+    //     s.area(),
+    //     s.perimeter(),
+    //     s.is_square()
+    // );
+    // let mut r = Rectangle {
+    //     width: 4.0,
+    //     height: 3.0,
+    // };
+    // r.scale(2.0);
+    // println!(
+    //     "area = {}, perimeter = {}, is a square = {}",
+    //     r.area(),
+    //     r.perimeter(),
+    //     r.is_square()
+    // );
 
-    let mut r = Rectangle {
-        width: 4.0,
-        height: 3.0,
-    };
-    r.scale(2.0);
+    // Day 10 - Maps & Iterators
+    let mut hosts: HashMap<String, u32> = HashMap::new();
+    hosts.insert("web-01".to_string(), 4);
+    hosts.insert("web-02".to_string(), 4);
+    hosts.insert("db-01".to_string(), 8);
+    hosts.insert("bcdr-01".to_string(), 16);
+
+    let max_name = hosts
+        .iter()
+        .max_by_key(|(_, cores)| **cores)
+        .map(|(k, _)| k);
     println!(
-        "area = {}, perimeter = {}, is a square = {}",
-        r.area(),
-        r.perimeter(),
-        r.is_square()
+        "{} {}",
+        Option::unwrap(max_name),
+        hosts[Option::unwrap(max_name)]
     );
 }
 
