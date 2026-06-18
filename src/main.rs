@@ -23,20 +23,20 @@ impl fmt::Display for TrafficLight {
 }
 
 fn main() {
+    // Day 1 - Hello World & Toolchain
+    // println!("Hello, world!");
+
     // Day 2 - Variables, Mutability, and Types
     // let name: &str = "Mark";
     // let age: u32 = 123;
     // let height_meters: f32 = 3.5;
     // let is_devops: bool = true;
-
     // println!("{name}, {age}, {height_meters}, {is_devops}");
 
     // Day 3 - FizzBuzz
     // let iter = 20;
-
     // for i in 1..=iter {
     //     let mut output = i.to_string();
-
     //     if i % 3 == 0 {
     //         output = String::from("Fizz");
     //     }
@@ -46,10 +46,8 @@ fn main() {
     //     if i % 3 == 0 && i % 5 == 0 {
     //         output = String::from("FizzBuzz");
     //     }
-
     //     println!("{output}")
     // }
-
     // for i in 1..=iter {
     //     match (i % 3, i % 5) {
     //         (0, 0) => println!("FizzBuzz"),
@@ -59,26 +57,26 @@ fn main() {
     //     }
     // }
 
-    // Day 4
+    // Day 4 - Functions
     // for i in 2..=20 {
     //     if is_prime(i) {
     //         println!("{i}");
     //     }
     // }
 
-    // Day 5
+    // Day 5 - Collections — Arrays, Vectors
     // let v: Vec<i32> = (1..=10).collect();
     // let sum: i32 = v.iter().sum();
     // let avg: f64 = sum as f64 / v.len() as f64;
     // let evens: Vec<&i32> = v.iter().filter(|x| *x % 2 == 0).collect();
     // println!("sum={sum}, avg={avg}, evens={evens:?}");
 
-    // Day 6
+    // Day 6 - Ownership & Borrowing
     // let s1 = "testing testing";
     // let s2 = "testing";
     // println!("{}", longest(&s1, &s2))
 
-    // Day 7
+    // Day 7 - Structs
     // My way
     // let servers: Vec<Server> = vec![
     //     Server {
@@ -97,28 +95,25 @@ fn main() {
     //         is_active: true,
     //     },
     // ];
-
     // let mut num_active = 0;
     // for s in &servers {
     //     println!("{} has {} cores", s.name, s.cpu_cores);
-
     //     if s.is_active {
     //         num_active += 1;
     //     }
     // }
     // println!("{} servers active", num_active);
-
-    // // More rustic way
+    // More rustic way
     // let active = servers.iter().filter(|s| s.is_active).count();
     // println!("active: {active}");
 
-    // Day 8
-    let lights: Vec<TrafficLight> =
-        vec![TrafficLight::Red, TrafficLight::Yellow, TrafficLight::Green];
-    for i in lights {
-        let next = next_traffic_light(&i);
-        println!("Current: {}; Next: {}", i, next)
-    }
+    // Day 8 - Enums
+    // let lights: Vec<TrafficLight> =
+    //     vec![TrafficLight::Red, TrafficLight::Yellow, TrafficLight::Green];
+    // for i in lights {
+    //     let next = next_traffic_light(&i);
+    //     println!("Current: {}; Next: {}", i, next)
+    // }
 }
 
 // Day 4
@@ -138,6 +133,7 @@ fn is_prime(num: i32) -> bool {
     true
 }
 
+// Day 6
 fn longest(s1: &str, s2: &str) -> usize {
     if s1.len() > s2.len() {
         s1.len()
@@ -146,6 +142,7 @@ fn longest(s1: &str, s2: &str) -> usize {
     }
 }
 
+// Day 8
 fn next_traffic_light(light: &TrafficLight) -> TrafficLight {
     match light {
         TrafficLight::Green => TrafficLight::Yellow,
