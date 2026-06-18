@@ -22,6 +22,37 @@ impl fmt::Display for TrafficLight {
     }
 }
 
+struct Rectangle {
+    width: f64,
+    height: f64,
+}
+
+impl Rectangle {
+    fn area(&self) -> f64 {
+        self.width * self.height
+    }
+
+    fn scale(&mut self, factor: f64) {
+        self.height *= factor;
+        self.width *= factor;
+    }
+
+    fn square(side: f64) -> Rectangle {
+        Rectangle {
+            width: side,
+            height: side,
+        }
+    }
+
+    fn perimeter(&self) -> f64 {
+        self.width * 2 as f64 + self.height * 2 as f64
+    }
+
+    fn is_square(&self) -> bool {
+        self.width == self.height
+    }
+}
+
 fn main() {
     // Day 1 - Hello World & Toolchain
     // println!("Hello, world!");
@@ -114,6 +145,28 @@ fn main() {
     //     let next = next_traffic_light(&i);
     //     println!("Current: {}; Next: {}", i, next)
     // }
+
+    // Day 9 - impl Blocks
+    let mut s = Rectangle::square(4.0);
+    s.scale(2.0);
+    println!(
+        "area = {}, perimeter = {}, is a square = {}",
+        s.area(),
+        s.perimeter(),
+        s.is_square()
+    );
+
+    let mut r = Rectangle {
+        width: 4.0,
+        height: 3.0,
+    };
+    r.scale(2.0);
+    println!(
+        "area = {}, perimeter = {}, is a square = {}",
+        r.area(),
+        r.perimeter(),
+        r.is_square()
+    );
 }
 
 // Day 4
