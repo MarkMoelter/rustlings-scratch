@@ -45,7 +45,7 @@ impl Rectangle {
     }
 
     fn perimeter(&self) -> f64 {
-        self.width * 2 as f64 + self.height * 2 as f64
+        2.0 * (self.width + self.height)
     }
 
     fn is_square(&self) -> bool {
