@@ -1,5 +1,4 @@
 use core::fmt;
-use std::collections::HashMap;
 
 struct Server {
     name: String,
@@ -169,21 +168,37 @@ fn main() {
     // );
 
     // Day 10 - Maps & Iterators
-    let mut hosts: HashMap<String, u32> = HashMap::new();
-    hosts.insert("web-01".to_string(), 4);
-    hosts.insert("web-02".to_string(), 4);
-    hosts.insert("db-01".to_string(), 8);
-    hosts.insert("bcdr-01".to_string(), 16);
+    // let mut hosts: HashMap<String, u32> = HashMap::new();
+    // hosts.insert("web-01".to_string(), 4);
+    // hosts.insert("web-02".to_string(), 4);
+    // hosts.insert("db-01".to_string(), 8);
+    // hosts.insert("bcdr-01".to_string(), 16);
+    // let max_name = hosts
+    //     .iter()
+    //     .max_by_key(|(_, cores)| **cores)
+    //     .map(|(k, _)| k);
+    // println!(
+    //     "{} {}",
+    //     Option::unwrap(max_name),
+    //     hosts[Option::unwrap(max_name)]
+    // );
 
-    let max_name = hosts
-        .iter()
-        .max_by_key(|(_, cores)| **cores)
-        .map(|(k, _)| k);
-    println!(
-        "{} {}",
-        Option::unwrap(max_name),
-        hosts[Option::unwrap(max_name)]
-    );
+    // Day 11 - Error Handling
+    match divide(10.0, 2.0) {
+        Ok(result) => println!("result = {result}"),
+        Err(e) => println!("error: {e}"),
+    }
+
+    // `?` propagates errors up the call stack
+    let r = divide(10.0, 0.0);
+    println!("{:?}", r);
+
+    if let Some(idx) = find(&[1, 2, 3], 2) {
+        println!("found at {idx}");
+    }
+
+    let p_int = parse_positive_int("6");
+    println!("{:?}", p_int);
 }
 
 // Day 4
@@ -219,4 +234,34 @@ fn next_traffic_light(light: &TrafficLight) -> TrafficLight {
         TrafficLight::Yellow => TrafficLight::Red,
         TrafficLight::Red => TrafficLight::Green,
     }
+}
+
+// Day 11
+fn divide(a: f64, b: f64) -> Result<f64, String> {
+    if b == 0.0 {
+        Err("division by zero".to_string())
+    } else {
+        Ok(a / b)
+    }
+}
+
+fn find(v: &[i32], target: i32) -> Option<usize> {
+    for (i, &x) in v.iter().enumerate() {
+        if x == target {
+            return Some(i);
+        }
+    }
+    None
+}
+
+fn parse_positive_int(s: &str) -> Result<u32, String> {
+    s.parse::<i64>()
+        .map_err(|_| "not a number".to_string())
+        .and_then(|n| {
+            if n >= 0 {
+                Ok(n as u32)
+            } else {
+                Err("negative".to_string())
+            }
+        })
 }
