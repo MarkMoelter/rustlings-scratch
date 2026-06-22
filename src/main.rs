@@ -1,4 +1,5 @@
 use core::fmt;
+use std::f64::consts::PI;
 
 struct Server {
     name: String,
@@ -28,10 +29,6 @@ struct Rectangle {
 }
 
 impl Rectangle {
-    fn area(&self) -> f64 {
-        self.width * self.height
-    }
-
     fn scale(&mut self, factor: f64) {
         self.height *= factor;
         self.width *= factor;
@@ -50,6 +47,47 @@ impl Rectangle {
 
     fn is_square(&self) -> bool {
         self.width == self.height
+    }
+}
+
+trait Describable {
+    fn describe(&self) -> String;
+}
+
+struct Database {
+    name: String,
+    engine: String,
+}
+
+impl Describable for Server {
+    fn describe(&self) -> String {
+        format!("Server: {}", self.name)
+    }
+}
+
+impl Describable for Database {
+    fn describe(&self) -> String {
+        format!("Database: {} ({})", self.name, self.engine)
+    }
+}
+
+trait Shape {
+    fn area(&self) -> f64;
+}
+
+struct Circle {
+    radius: f64,
+}
+
+impl Shape for Circle {
+    fn area(&self) -> f64 {
+        self.radius.powf(2.0) * PI
+    }
+}
+
+impl Shape for Rectangle {
+    fn area(&self) -> f64 {
+        self.width * self.height
     }
 }
 
@@ -184,21 +222,45 @@ fn main() {
     // );
 
     // Day 11 - Error Handling
-    match divide(10.0, 2.0) {
-        Ok(result) => println!("result = {result}"),
-        Err(e) => println!("error: {e}"),
+    // match divide(10.0, 2.0) {
+    //     Ok(result) => println!("result = {result}"),
+    //     Err(e) => println!("error: {e}"),
+    // }
+    // // `?` propagates errors up the call stack
+    // let r = divide(10.0, 0.0);
+    // println!("{:?}", r);
+    // if let Some(idx) = find(&[1, 2, 3], 2) {
+    //     println!("found at {idx}");
+    // }
+    // let p_int = parse_positive_int("6");
+    // println!("{:?}", p_int);
+
+    // Day 12 - Traits
+    let s = Box::new(Server {
+        name: "web-01".to_string(),
+        cpu_cores: 4,
+        is_active: true,
+    });
+
+    let d = Box::new(Database {
+        name: "db-01".to_string(),
+        engine: "sql server".to_string(),
+    });
+
+    let items: Vec<Box<dyn Describable>> = vec![s, d];
+    print_all(&items);
+
+    let r = Box::new(Rectangle {
+        height: 5.0,
+        width: 3.0,
+    });
+    let c = Box::new(Circle { radius: 10.0 });
+
+    let shapes: Vec<Box<dyn Shape>> = vec![r, c];
+
+    for shape in shapes {
+        println!("{}", shape.area())
     }
-
-    // `?` propagates errors up the call stack
-    let r = divide(10.0, 0.0);
-    println!("{:?}", r);
-
-    if let Some(idx) = find(&[1, 2, 3], 2) {
-        println!("found at {idx}");
-    }
-
-    let p_int = parse_positive_int("6");
-    println!("{:?}", p_int);
 }
 
 // Day 4
@@ -264,4 +326,10 @@ fn parse_positive_int(s: &str) -> Result<u32, String> {
                 Err("negative".to_string())
             }
         })
+}
+
+fn print_all(items: &[Box<dyn Describable>]) {
+    for item in items {
+        println!("{}", item.describe());
+    }
 }
