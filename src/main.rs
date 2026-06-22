@@ -91,6 +91,25 @@ impl Shape for Rectangle {
     }
 }
 
+struct Stack<T> {
+    items: Vec<T>,
+}
+
+impl<T> Stack<T> {
+    fn new() -> Self {
+        Stack { items: Vec::new() }
+    }
+    fn push(&mut self, item: T) {
+        self.items.push(item);
+    }
+    fn pop(&mut self) -> Option<T> {
+        self.items.pop()
+    }
+    fn peek(&mut self) -> Option<&T> {
+        self.items.last()
+    }
+}
+
 fn main() {
     // Day 1 - Hello World & Toolchain
     // println!("Hello, world!");
@@ -236,31 +255,44 @@ fn main() {
     // println!("{:?}", p_int);
 
     // Day 12 - Traits
-    let s = Box::new(Server {
-        name: "web-01".to_string(),
-        cpu_cores: 4,
-        is_active: true,
-    });
+    // let s = Box::new(Server {
+    //     name: "web-01".to_string(),
+    //     cpu_cores: 4,
+    //     is_active: true,
+    // });
+    // let d = Box::new(Database {
+    //     name: "db-01".to_string(),
+    //     engine: "sql server".to_string(),
+    // });
+    // let items: Vec<Box<dyn Describable>> = vec![s, d];
+    // print_all(&items);
+    // let r = Box::new(Rectangle {
+    //     height: 5.0,
+    //     width: 3.0,
+    // });
+    // let c = Box::new(Circle { radius: 10.0 });
+    // let shapes: Vec<Box<dyn Shape>> = vec![r, c];
+    // for shape in shapes {
+    //     println!("{}", shape.area())
+    // }
 
-    let d = Box::new(Database {
-        name: "db-01".to_string(),
-        engine: "sql server".to_string(),
-    });
+    // Day 13 - Generics
+    println!("{}", largest(&[3, 7, 2, 9, 4]));
+    println!("{}", largest(&[1.5, 2.5, 0.5]));
 
-    let items: Vec<Box<dyn Describable>> = vec![s, d];
-    print_all(&items);
+    let mut int_stack: Stack<i32> = Stack::new();
+    int_stack.push(10);
+    int_stack.push(7);
+    int_stack.push(109);
 
-    let r = Box::new(Rectangle {
-        height: 5.0,
-        width: 3.0,
-    });
-    let c = Box::new(Circle { radius: 10.0 });
+    println!("Popped: {:?}", int_stack.pop());
+    println!("Peek: {:?}", int_stack.peek());
 
-    let shapes: Vec<Box<dyn Shape>> = vec![r, c];
+    let mut str_stack: Stack<String> = Stack::new();
+    str_stack.push("hello".to_string());
+    str_stack.push("world".to_string());
 
-    for shape in shapes {
-        println!("{}", shape.area())
-    }
+    println!("Popped: {:?}", str_stack.pop());
 }
 
 // Day 4
@@ -332,4 +364,14 @@ fn print_all(items: &[Box<dyn Describable>]) {
     for item in items {
         println!("{}", item.describe());
     }
+}
+
+fn largest<T: PartialOrd + Copy>(items: &[T]) -> T {
+    let mut max = items[0];
+    for &item in items {
+        if item > max {
+            max = item;
+        }
+    }
+    max
 }
