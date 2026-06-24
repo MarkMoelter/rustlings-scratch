@@ -1,5 +1,10 @@
+#![allow(dead_code)]
+
 use core::fmt;
 use std::f64::consts::PI;
+
+mod fizzbuzz;
+mod network;
 
 struct Server {
     name: String,
@@ -277,22 +282,27 @@ fn main() {
     // }
 
     // Day 13 - Generics
-    println!("{}", largest(&[3, 7, 2, 9, 4]));
-    println!("{}", largest(&[1.5, 2.5, 0.5]));
+    // println!("{}", largest(&[3, 7, 2, 9, 4]));
+    // println!("{}", largest(&[1.5, 2.5, 0.5]));
+    // let mut int_stack: Stack<i32> = Stack::new();
+    // int_stack.push(10);
+    // int_stack.push(7);
+    // int_stack.push(109);
+    // println!("Popped: {:?}", int_stack.pop());
+    // println!("Peek: {:?}", int_stack.peek());
+    // let mut str_stack: Stack<String> = Stack::new();
+    // str_stack.push("hello".to_string());
+    // str_stack.push("world".to_string());
+    // println!("Popped: {:?}", str_stack.pop());
 
-    let mut int_stack: Stack<i32> = Stack::new();
-    int_stack.push(10);
-    int_stack.push(7);
-    int_stack.push(109);
+    // Day 14 - Modules
+    network::ping("10.0.0.1");
 
-    println!("Popped: {:?}", int_stack.pop());
-    println!("Peek: {:?}", int_stack.peek());
-
-    let mut str_stack: Stack<String> = Stack::new();
-    str_stack.push("hello".to_string());
-    str_stack.push("world".to_string());
-
-    println!("Popped: {:?}", str_stack.pop());
+    // Implement fizz_buzz as a module and call it here
+    for i in 1..=20 {
+        let out = fizzbuzz::fizz_buzz(i);
+        println!("{}", out);
+    }
 }
 
 // Day 4
