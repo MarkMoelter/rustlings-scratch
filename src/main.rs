@@ -385,3 +385,17 @@ fn largest<T: PartialOrd + Copy>(items: &[T]) -> T {
     }
     max
 }
+
+// Day 15 - Testing
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_is_prime() {
+        assert!(is_prime(7));
+        assert!(!is_prime(8));
+        assert!(!is_prime(1));
+        assert!(!is_prime(4));
+    }
+}
