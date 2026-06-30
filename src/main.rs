@@ -2,6 +2,8 @@
 
 use core::fmt;
 use std::f64::consts::PI;
+use std::sync::mpsc;
+use std::thread;
 
 mod fizzbuzz;
 mod network;
@@ -296,13 +298,37 @@ fn main() {
     // println!("Popped: {:?}", str_stack.pop());
 
     // Day 14 - Modules
-    network::ping("10.0.0.1");
+    // network::ping("10.0.0.1");
+    // // Implement fizz_buzz as a module and call it here
+    // for i in 1..=20 {
+    //     let out = fizzbuzz::fizz_buzz(i);
+    //     println!("{}", out);
 
-    // Implement fizz_buzz as a module and call it here
-    for i in 1..=20 {
-        let out = fizzbuzz::fizz_buzz(i);
-        println!("{}", out);
+    // Day 16 - Concurrency
+    // let (tx, rx) = mpsc::channel();
+    // for i in 0..3 {
+    //     let tx = tx.clone();
+    //     thread::spawn(move || {
+    //         tx.send(format!("worker {i} done")).unwrap();
+    //     });
+    // }
+    // drop(tx);
+    // for msg in rx {
+    //     println!("{msg}");
+    // }
+
+    let (tx, rx) = mpsc::channel();
+
+    for i in 0..5_i32 {
+        let tx = tx.clone();
+        thread::spawn(move || tx.send(i.pow(2)).unwrap());
     }
+
+    drop(tx);
+
+    let mut results: Vec<i32> = rx.iter().collect();
+    results.sort();
+    println!("{results:?}");
 }
 
 // Day 4
