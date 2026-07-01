@@ -1,8 +1,9 @@
 #![allow(dead_code)]
 
 use core::fmt;
+use rand::RngExt;
 use std::f64::consts::PI;
-use std::sync::mpsc;
+use std::sync::{Arc, Mutex};
 use std::thread;
 
 mod fizzbuzz;
@@ -316,19 +317,52 @@ fn main() {
     // for msg in rx {
     //     println!("{msg}");
     // }
+    // let (tx, rx) = mpsc::channel();
+    // for i in 0..5_i32 {
+    //     let tx = tx.clone();
+    //     thread::spawn(move || tx.send(i.pow(2)).unwrap());
+    // }
+    // drop(tx);
+    // let mut results: Vec<i32> = rx.iter().collect();
+    // results.sort();
+    // println!("{results:?}");
 
-    let (tx, rx) = mpsc::channel();
+    // Day 17
+    // let counter = Arc::new(Mutex::new(0));
+    // let mut handles = Vec::new();
 
-    for i in 0..5_i32 {
-        let tx = tx.clone();
-        thread::spawn(move || tx.send(i.pow(2)).unwrap());
+    // for _ in 0..10 {
+    //     let counter = Arc::clone(&counter);
+    //     handles.push(thread::spawn(move || {
+    //         let mut num = counter.lock().unwrap();
+    //         *num += 1;
+    //     }));
+    // }
+
+    // for h in handles {
+    //     h.join().unwrap();
+    // }
+    // println!("result = {}", *counter.lock().unwrap());
+
+    let success_count = Arc::new(Mutex::new(0));
+    let mut handles = Vec::new();
+
+    for _ in 0..20 {
+        let success_count = Arc::clone(&success_count);
+        let flip = rand::rng().random::<bool>();
+        handles.push(thread::spawn(move || {
+            let mut num = success_count.lock().unwrap();
+            if flip {
+                *num += 1;
+            }
+        }));
     }
 
-    drop(tx);
+    for h in handles {
+        h.join().unwrap();
+    }
 
-    let mut results: Vec<i32> = rx.iter().collect();
-    results.sort();
-    println!("{results:?}");
+    println!("result = {}", success_count.lock().unwrap());
 }
 
 // Day 4
