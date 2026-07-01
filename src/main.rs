@@ -349,8 +349,8 @@ fn main() {
 
     for _ in 0..20 {
         let success_count = Arc::clone(&success_count);
-        let flip = rand::rng().random::<bool>();
         handles.push(thread::spawn(move || {
+            let flip = rand::rng().random::<bool>();
             let mut num = success_count.lock().unwrap();
             if flip {
                 *num += 1;
