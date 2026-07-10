@@ -1,10 +1,7 @@
 #![allow(dead_code)]
 
 use core::fmt;
-use rand::RngExt;
 use std::f64::consts::PI;
-use std::sync::{Arc, Mutex};
-use std::thread;
 
 mod fizzbuzz;
 mod network;
@@ -330,7 +327,6 @@ fn main() {
     // Day 17
     // let counter = Arc::new(Mutex::new(0));
     // let mut handles = Vec::new();
-
     // for _ in 0..10 {
     //     let counter = Arc::clone(&counter);
     //     handles.push(thread::spawn(move || {
@@ -338,31 +334,34 @@ fn main() {
     //         *num += 1;
     //     }));
     // }
-
     // for h in handles {
     //     h.join().unwrap();
     // }
     // println!("result = {}", *counter.lock().unwrap());
+    // let success_count = Arc::new(Mutex::new(0));
+    // let mut handles = Vec::new();
+    // for _ in 0..20 {
+    //     let success_count = Arc::clone(&success_count);
+    //     handles.push(thread::spawn(move || {
+    //         let flip = rand::rng().random::<bool>();
+    //         let mut num = success_count.lock().unwrap();
+    //         if flip {
+    //             *num += 1;
+    //         }
+    //     }));
+    // }
+    // for h in handles {
+    //     h.join().unwrap();
+    // }
+    // println!("result = {}", success_count.lock().unwrap());
 
-    let success_count = Arc::new(Mutex::new(0));
-    let mut handles = Vec::new();
+    // Day 18
+    let double = |n: i32| n * 2;
 
-    for _ in 0..20 {
-        let success_count = Arc::clone(&success_count);
-        handles.push(thread::spawn(move || {
-            let flip = rand::rng().random::<bool>();
-            let mut num = success_count.lock().unwrap();
-            if flip {
-                *num += 1;
-            }
-        }));
-    }
+    let double_3_times = apply_n_times(double, 3);
 
-    for h in handles {
-        h.join().unwrap();
-    }
-
-    println!("result = {}", success_count.lock().unwrap());
+    let result = double_3_times(1);
+    println!("{}", result);
 }
 
 // Day 4
@@ -444,6 +443,17 @@ fn largest<T: PartialOrd + Copy>(items: &[T]) -> T {
         }
     }
     max
+}
+
+// Day 18
+fn apply_n_times<F: Fn(i32) -> i32>(f: F, n: u32) -> impl Fn(i32) -> i32 {
+    move |x| {
+        let mut result = x;
+        for _ in 0..n {
+            result = f(result);
+        }
+        result
+    }
 }
 
 // Day 15 - Testing
